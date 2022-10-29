@@ -4,9 +4,7 @@ import time
 
 
 class Draw:
-
     
-
     def __init__(self):
         self.red    = win32api.RGB(255, 0, 0)
         self.green  = win32api.RGB(0, 255, 0)
