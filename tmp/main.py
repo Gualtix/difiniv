@@ -72,53 +72,19 @@ def main():
     
     
 
-def wndProc(hWnd, message, wParam, lParam):
-    if message == win32con.WM_PAINT:
-        hdc, paintStruct = win32gui.BeginPaint(hWnd)
-        win32gui.SetTextColor(hdc,win32api.RGB(0,255,0))
 
-        dpiScale = win32ui.GetDeviceCaps(hdc, win32con.LOGPIXELSX) / 60.0
-        fontSize = 80
-
-        # http://msdn.microsoft.com/en-us/library/windows/desktop/dd145037(v=vs.85).aspx
-        lf = win32gui.LOGFONT()
-        lf.lfFaceName = "Consolas"
-        lf.lfHeight = int(round(dpiScale * fontSize)) 
-        #lf.lfWeight = 150
-        # Use nonantialiased to remove the white edges around the text.
-        
-        lf.lfQuality = win32con.NONANTIALIASED_QUALITY
-        hf = win32gui.CreateFontIndirect(lf)
-        win32gui.SelectObject(hdc, hf)
-
-        rect = win32gui.GetClientRect(hWnd)
-        # http://msdn.microsoft.com/en-us/library/windows/desktop/dd162498(v=vs.85).aspx
-        win32gui.DrawText(
-            hdc,
-            'Text on the screen',
-            -1,
-            rect,
-            win32con.DT_CENTER | win32con.DT_NOCLIP | win32con.DT_SINGLELINE | win32con.DT_VCENTER
-        )
-        win32gui.EndPaint(hWnd, paintStruct)
-        
-        return 0
-
-    elif message == win32con.WM_DESTROY:
-        print ('Closing the window.')
-        win32gui.PostQuitMessage(0)
-        return 0
-
-    else:
-        return win32gui.DefWindowProc(hWnd, message, wParam, lParam)
 
 
 if __name__ == '__main__':
 
+    main()
+
+    """
     x = threading.Thread(target=main, args=[])
 
     print('Thread started')
     sleep(5)
     print('Thread stopped')
     sys.exit(0)
+    """
     
