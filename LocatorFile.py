@@ -1,3 +1,5 @@
+from os import system
+import sys
 import cv2
 import pyautogui
 import numpy as np
@@ -24,7 +26,15 @@ class Locator:
         enviroment_height, enviromente_width = enviroment.shape[:2]
 
         rectangles = []
-        threshold = 0.35
+        threshold = 0.50
+
+
+        #cv2.imshow('Imagen', enviroment)
+        #cv2.waitKey(0)
+        #cv2.destroyAllWindows()
+        #sys.exit()
+
+        
         
         # Iteracion  sobre 20 escalas diferentes entre 0.2 y 1
         for scale in np.linspace(0.2, 1.0, 20)[::-1]:

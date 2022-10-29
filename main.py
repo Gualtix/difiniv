@@ -5,7 +5,7 @@ from LocatorFile import Locator
 def main():
 
     Lc = Locator()
-    Lc.multi_scale_locator('./Img/templates/chrome.png','./Img/enviroments/desktop_1.png')
+    Lc.multi_scale_locator('./Img/templates/chrome.png','./Img/enviroments/desktop_2.png')
 
 if __name__ == "__main__":
     main()
