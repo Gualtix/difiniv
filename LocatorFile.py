@@ -24,7 +24,7 @@ class Locator:
         enviroment_height, enviromente_width = enviroment.shape[:2]
 
         rectangles = []
-        threshold = 0.13
+        threshold = 0.35
         
         # Iteracion  sobre 20 escalas diferentes entre 0.2 y 1
         for scale in np.linspace(0.2, 1.0, 20)[::-1]:
@@ -34,16 +34,25 @@ class Locator:
             w, h = resized.shape[:2]
 
             #result = cv2.matchTemplate(enviroment,resized, cv2.TM_CCOEFF_NORMED)
+
             
-            result = cv2.matchTemplate(enviroment,resized, cv2.TM_CCOEFF)
-            min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(result)
             
-            rectangles.append([int(max_loc[0]), int(max_loc[1]), int(w), int(h)])
-            rectangles.append([int(max_loc[0]), int(max_loc[1]), int(w), int(h)])
+            result = cv2.matchTemplate(enviroment,resized, cv2.TM_CCOEFF_NORMED)
+            #min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(result)
+
+            yloc, xloc = np.where(result >= threshold)
+            for (x, y) in zip(xloc, yloc):
+                rectangles.append([int(x), int(y), int(w), int(h)])
+                rectangles.append([int(x), int(y), int(w), int(h)])
+
+            print("loc: ", len(xloc))
+            
+            #rectangles.append([int(max_loc[0]), int(max_loc[1]), int(w), int(h)])
+            #rectangles.append([int(max_loc[0]), int(max_loc[1]), int(w), int(h)])
             
             #print("Rectangles: ", len(rectangles))
         
-        rectangles, weights = cv2.groupRectangles(rectangles, 1, 0.2)
+        rectangles, weights = cv2.groupRectangles(rectangles, 1, 0.9)
         for (x,y,w,h) in rectangles:
             cv2.rectangle(original, (x,y), (x+w, y+h), (0,255,255), 2)
         
