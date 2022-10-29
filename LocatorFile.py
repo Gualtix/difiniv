@@ -3,9 +3,6 @@ import pyautogui
 import numpy as np
 import imutils
 
-
-#x, y = pyautogui.locateCenterOnScreen('calc7key.png')
-
 class Locator:
 
     def __init__(self):
@@ -27,6 +24,8 @@ class Locator:
 
     def multi_scale_locator(self, template_url,enviroment_url):
 
+        original = cv2.imread(enviroment_url)
+
         template = cv2.imread(template_url)
         template = cv2.cvtColor(template, cv2.COLOR_BGR2GRAY)
         template = cv2.Canny(template, 50, 200)
@@ -36,7 +35,7 @@ class Locator:
 
         enviroment = cv2.imread(enviroment_url)
         enviroment = cv2.cvtColor(enviroment, cv2.COLOR_BGR2GRAY)
-        #enviroment = cv2.Canny(enviroment, 50, 200)
+        enviroment = cv2.Canny(enviroment, 50, 200)
         enviroment_height, enviromente_width = enviroment.shape[:2]
         #cv2.imshow('Enviroment', enviroment)
         #cv2.waitKey(0)
@@ -69,9 +68,9 @@ class Locator:
         
         rectangles, weights = cv2.groupRectangles(rectangles, 1, 0.2)
         for (x,y,w,h) in rectangles:
-            cv2.rectangle(enviroment, (x,y), (x+w, y+h), (0,255,255), 2)
+            cv2.rectangle(original, (x,y), (x+w, y+h), (0,255,255), 2)
         
-        cv2.imshow('Imagen', enviroment)
+        cv2.imshow('Imagen', original)
         cv2.waitKey(0)
         
         
